@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng Nhập Hệ Thống</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center" style="min-height: 100vh;">
+    <div class="container" style="max-width: 400px;">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-body p-4">
+                <h3 class="text-center fw-bold text-dark mb-4">Đăng Nhập</h3>
+                <div th:if="${error}" class="alert alert-danger small text-center" th:text="${error}"></div>
+                <form th:action="@{/login}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Tài khoản</label>
+                        <input type="text" name="username" class="form-control" placeholder="admin hoặc customer" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Mật khẩu</label>
+                        <input type="password" name="password" class="form-control" placeholder="123456" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold mt-2">Vào Hệ Thống</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

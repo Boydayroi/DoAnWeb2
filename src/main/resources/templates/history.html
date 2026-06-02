@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoSpace - Lịch Sử Đặt Lịch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light py-5">
+    <div class="container" style="max-width: 800px;">
+        <div class="mb-3">
+            <a href="/" class="text-decoration-none text-muted">← Quay lại trang chủ</a>
+        </div>
+        <div class="card shadow-sm border-0 p-4 rounded-3">
+            <h3 class="fw-bold text-dark mb-4">🔍 Tra Cứu Lịch Sử Đặt Lịch Hẹn</h3>
+            
+            <form action="/my-history" method="get" class="row g-2 mb-4">
+                <div class="col-md-9">
+                    <input type="text" name="phone" th:value="${searchedPhone}" class="form-control" placeholder="Nhập số điện thoại của bạn để tra cứu..." required>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">Tìm kiếm</button>
+                </div>
+            </form>
+            
+            <table class="table table-bordered align-middle mt-2" th:if="${myAppointments != null}">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Mẫu Xe Đăng Ký</th>
+                        <th>Thời Gian Hẹn Gặp</th>
+                        <th>Loại Dịch Vụ</th>
+                        <th class="text-center">Trạng Thái Duyệt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="ap : ${myAppointments}">
+                        <td th:text="${ap.car != null ? ap.car.name : 'Xe đã xóa'}" class="fw-bold text-primary"></td>
+                        <td th:text="${ap.bookingDate} + ' (' + ${ap.bookingTime} + ')'"></td>
+                        <td th:text="${ap.serviceType == 'LAI_THU' ? 'Lái thử xe' : 'Bảo dưỡng định kỳ'}"></td>
+                        <td class="text-center">
+                            <span th:if="${ap.status == 'PENDING'}" class="badge bg-warning text-dark px-3 py-1">Chờ duyệt</span>
+                            <span th:if="${ap.status == 'APPROVED'}" class="badge bg-success px-3 py-1">Đã duyệt ✓</span>
+                            <span th:if="${ap.status == 'CANCELLED'}" class="badge bg-danger px-3 py-1">Từ chối ✗</span>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(myAppointments)}">
+                        <td colspan="4" class="text-center text-muted py-3">Không tìm thấy lịch hẹn nào gắn với số điện thoại này.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
